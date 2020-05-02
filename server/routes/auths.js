@@ -44,7 +44,13 @@ router.patch('/forgotUsername', async (req, res) => {
 //** FORGOT USER PASSWORD */
 router.patch('/forgotPassword', async (req, res) => {
     try {
-
+        const userUpdate = User.findOneAndUpdate(
+            { email: req.body.email },
+            { password: req.body.password }
+        );
+        // res.status(200).json(userUpdate);
+        console.log(userUpdate);
+        res.status(200).json({ message: "Updated Successfully...!" });
     } catch (error) {
         res.status(200).json({ message: error });
     }
@@ -53,7 +59,13 @@ router.patch('/forgotPassword', async (req, res) => {
 //** CHANGE USER PASSWORD */
 router.patch('/changePassword/:id', async (req, res) => {
     try {
-
+        const userUpdate = User.updateOne(
+            { _id: req.params.id },
+            { password: req.body.password }
+        );
+        // res.status(200).json(userUpdate);
+        console.log(userUpdate);
+        res.status(200).json({ message: "Updated Successfully...!" });
     } catch (error) {
         res.status(200).json({ message: error });
     }
