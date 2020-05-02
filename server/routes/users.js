@@ -18,11 +18,52 @@ router.post('/', async (req, res) => {
         username: req.body.username,
         password: req.body.password,
         first_name: req.body.first_name,
-        last_name: req.body.last_name
+        last_name: req.body.last_name,
+        is_admin: req.body.is_admin,
+        email: req.body.email,
+        phone: req.body.phone,
+        dob: req.body.dob,
+        modified_by: req.body.modified_by
     });
     try {
         const savedUser = await user.save();
         res.status(200).json(savedUser);
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+});
+
+//** UPDATE USER BY ID */
+router.patch('/:id', async (req, res) => {
+    try {
+        const user = await User.updateOne(
+            { _id: req.params.id },
+            {
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
+            }
+        );
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+});
+
+//** DELETE USER BY ID */
+router.delete('/:id', async (req, res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.params.id);
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+});
+
+//** GET USER BY ID */
+router.get('/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        res.status(200).json(user);
     } catch (error) {
         res.status(500).json({ message: error });
     }
@@ -49,6 +90,33 @@ router.post('/login', async (req, res) => {
             status: false,
             message: error
         });
+    }
+});
+
+//** FORGOT USER NAME */
+router.patch('/forgotUsername', async (req, res) => {
+    try {
+
+    } catch (error) {
+        res.status(200).json({ message: error });
+    }
+});
+
+//** FORGOT USER PASSWORD */
+router.patch('/forgotPassword', async (req, res) => {
+    try {
+
+    } catch (error) {
+        res.status(200).json({ message: error });
+    }
+});
+
+//** CHANGE USER PASSWORD */
+router.patch('/changePassword/:id', async (req, res) => {
+    try {
+
+    } catch (error) {
+        res.status(200).json({ message: error });
     }
 });
 
