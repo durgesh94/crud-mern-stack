@@ -22,8 +22,12 @@ app.use('/api/', authRoutes);
 //** Routes */
 app.get('/', (req, res) => {
     res.send(`RESTful API is running... 
-    \nPlease use below routes
-    \n1. http://localhost:5000/posts
+    \nPlease use below routes(CRUD) (POST, GET, PATCH, DELETE) :
+    \n1. http://localhost:5000/api/login
+    \n2. http://localhost:5000/api/forgotPassword
+    \n3. http://localhost:5000/api/forgotUsername
+    \n4. http://localhost:5000/api/ChangePassword
+    \n5. http://localhost:5000/api/users
     `);
 });
 

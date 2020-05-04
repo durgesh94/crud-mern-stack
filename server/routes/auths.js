@@ -29,43 +29,46 @@ router.post('/login', async (req, res) => {
 //** FORGOT USER NAME */
 router.patch('/forgotUsername', async (req, res) => {
     try {
-        const userUpdate = User.findOneAndUpdate(
+        const userUpdate = await User.findOneAndUpdate(
             { email: req.body.email },
             { username: req.body.username }
         );
-        // res.status(200).json(userUpdate);
-        console.log(userUpdate);
-        res.status(200).json({ message: "Updated Successfully...!" });
+        if (userUpdate)
+            res.status(200).json({ status: true, message: "Username updated successfully." });
+        else
+            res.status(200).json({ status: false, message: "EmailID not found." });
     } catch (error) {
-        res.status(200).json({ message: error });
+        res.status(500).json({ status: false, message: error });
     }
 });
 
 //** FORGOT USER PASSWORD */
 router.patch('/forgotPassword', async (req, res) => {
     try {
-        const userUpdate = User.findOneAndUpdate(
+        const userUpdate = await User.findOneAndUpdate(
             { email: req.body.email },
             { password: req.body.password }
         );
-        // res.status(200).json(userUpdate);
-        console.log(userUpdate);
-        res.status(200).json({ message: "Updated Successfully...!" });
+        if (userUpdate)
+            res.status(200).json({ message: "Password updated successfully." });
+        else
+            res.status(200).json({ status: false, message: "EmailID not found" });
     } catch (error) {
-        res.status(200).json({ message: error });
+        res.status(500).json({ status: false, message: error });
     }
 });
 
 //** CHANGE USER PASSWORD */
 router.patch('/changePassword/:id', async (req, res) => {
     try {
-        const userUpdate = User.updateOne(
+        const userUpdate = await User.updateOne(
             { _id: req.params.id },
-            { password: req.body.password }
+            { password: req.body.password, modified_by: req.params.id, modified_on: Date.now() }
         );
-        // res.status(200).json(userUpdate);
-        console.log(userUpdate);
-        res.status(200).json({ message: "Updated Successfully...!" });
+        if (userUpdate)
+            res.status(200).json({ status: true, message: "Password changed successfully." });
+        else
+            res.status(200).json({ status: false, message: "Something went wrong." });
     } catch (error) {
         res.status(200).json({ message: error });
     }
