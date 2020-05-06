@@ -26,6 +26,21 @@ router.post('/login', async (req, res) => {
     }
 });
 
+//** USER REGISTRATION */
+router.post('/register', async (req, res) => {
+    const user = new User({
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email
+    });
+    try {
+        const savedUser = await user.save();
+        res.status(200).json(savedUser);
+    } catch (error) {
+        res.status(500).json({ message: error });
+    }
+});
+
 //** FORGOT USER NAME */
 router.patch('/forgotUsername', async (req, res) => {
     try {
